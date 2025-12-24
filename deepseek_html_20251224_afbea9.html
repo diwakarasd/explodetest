@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG Hector 3D Configurator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+        }
+
+        #viewer-container {
+            flex: 3;
+            position: relative;
+        }
+
+        #controls-container {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 2px solid #00a8ff;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .control-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: #00a8ff;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #00a8ff;
+            padding-bottom: 5px;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .color-circle:hover {
+            transform: scale(1.1);
+        }
+
+        .color-circle.active {
+            border-color: #00a8ff;
+            transform: scale(1.1);
+        }
+
+        .wheel-options, .rim-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .wheel-option, .rim-option {
+            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: background 0.3s;
+        }
+
+        .wheel-option:hover, .rim-option:hover {
+            background: rgba(0, 168, 255, 0.2);
+        }
+
+        .wheel-option.active, .rim-option.active {
+            background: rgba(0, 168, 255, 0.3);
+            border: 2px solid #00a8ff;
+        }
+
+        button {
+            background: linear-gradient(45deg, #00a8ff, #0097e6);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 168, 255, 0.4);
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #00a8ff;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="viewer-container">
+            <div id="canvas-container"></div>
+            <div id="loading">Loading 3D Model...</div>
+            <div class="instructions">
+                🖱️ Left Click + Drag: Rotate | 🖱️ Right Click + Drag: Pan | 🖱️ Scroll: Zoom
+            </div>
+        </div>
+        
+        <div id="controls-container">
+            <div class="control-section">
+                <h2>Car Configuration</h2>
+                <p>Customize your MG Hector</p>
+            </div>
+            
+            <div class="control-section">
+                <h2>Exterior Color</h2>
+                <div class="color-options" id="color-options">
+                    <!-- Colors will be added by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="control-section">
+                <h2>Wheel Type</h2>
+                <div class="wheel-options" id="wheel-options">
+                    <!-- Wheel options will be added by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="control-section">
+                <h2>Rim Color</h2>
+                <div class="color-options" id="rim-color-options">
+                    <!-- Rim colors will be added by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="control-section">
+                <h2>Environment</h2>
+                <select id="environment-select" style="width: 100%; padding: 10px; border-radius: 5px; background: rgba(255,255,255,0.1); color: white; border: 1px solid #00a8ff;">
+                    <option value="studio">Showroom Studio</option>
+                    <option value="outdoor">Outdoor Daylight</option>
+                    <option value="night">Night Scene</option>
+                </select>
+            </div>
+            
+            <button id="reset-btn">Reset to Default</button>
+            <button id="screenshot-btn">Take Screenshot</button>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
